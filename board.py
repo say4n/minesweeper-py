@@ -80,7 +80,7 @@ class Board:
                         self.board[row][col].toggle_state()
                         self.num_not_opened -= 1
                         self.check_win()
-                        break
+                        return True
                     elif mousebutton == 3:
                         print(f"Flagging cell: ({row},{col})")
                         # flag mine!
@@ -92,7 +92,8 @@ class Board:
                             # flag mine
                             self.board[row][col].flagged = True
                             self.num_flag -= 1
-                        pass
+                        return True
+        return False
 
     def flood_fill(self, x, y):
         """flood fill to reveal nearby minefield"""

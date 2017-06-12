@@ -3,6 +3,7 @@ from constants import *
 import os
 import pygame_sdl2
 import sys
+import _thread
 
 
 class Game(object):
@@ -16,6 +17,8 @@ class Game(object):
         self.reload_button_image = None
         self.rect = None
         self.font = None
+        self.audio_mine = None
+        self.audio_tile = None
 
         # Setup !
         self.setup()
@@ -24,16 +27,23 @@ class Game(object):
         # Main variables
         self.width = BOARD_WIDTH * (TILE_DIMENSION + SEPARATION) + 2 * PADDING
         self.height = BOARD_HEIGHT * (TILE_DIMENSION + SEPARATION) + 2 * PADDING
+
         pygame_sdl2.init()
+        pygame_sdl2.mixer.init()
         self.window = pygame_sdl2.display.set_mode((self.height, self.width), pygame_sdl2.WINDOW_ALLOW_HIGHDPI)
         pygame_sdl2.display.set_caption(APP_NAME)
+
         self.board = Board(BOARD_WIDTH, BOARD_HEIGHT, NUMBER_OF_MINES, self.window)
         self.center = (self.width // 2, self.height // 2)
+
         self.reload_button_image = pygame_sdl2.transform.smoothscale(pygame_sdl2.image.load(os.path.join("assets",
                                                                                                    "reload.png")), (24,
                                                                                                                     24))
         self.rect = self.reload_button_image.get_rect().move(self.width + 12 * PADDING, SEPARATION)
         self.font = pygame_sdl2.font.SysFont("Arial", 40)
+
+        self.audio_mine = pygame_sdl2.mixer.Sound(os.path.join("assets", "audio", "mine.wav"))
+        self.audio_tile = pygame_sdl2.mixer.Sound(os.path.join("assets", "audio", "tile.wav"))
 
         self.main_func()
 
@@ -51,7 +61,9 @@ class Game(object):
                 if event.type == pygame_sdl2.MOUSEBUTTONDOWN:
                     mouseX, mouseY = pygame_sdl2.mouse.get_pos()
                     # print(f"Clicked at ({mouseX},{mouseY})")
-                    self.board.update_board(mouseX, mouseY, event.button)
+                    if self.board.update_board(mouseX, mouseY, event.button):
+                        if not self.board.gameover:
+                            _thread.start_new_thread(self.audio_tile.play, ())
 
             # Add things like player updates here
             # Also things like score updates or drawing additional items
@@ -63,6 +75,7 @@ class Game(object):
             pygame_sdl2.time.Clock().tick(60)
 
             if self.board.gameover:
+                _thread.start_new_thread(self.audio_mine.play, ())
                 print("Game over !")
                 self.gameover()
                 break
