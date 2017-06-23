@@ -39,7 +39,7 @@ class Game(object):
         self.reload_button_image = pygame_sdl2.transform.smoothscale(pygame_sdl2.image.load(os.path.join("assets",
                                                                                                    "reload.png")), (24,
                                                                                                                     24))
-        self.rect = self.reload_button_image.get_rect().move(self.width + 12 * PADDING, SEPARATION)
+        self.rect = self.reload_button_image.get_rect().move(SEPARATION, SEPARATION)
         self.font = pygame_sdl2.font.SysFont("Arial", 40)
 
         self.audio_mine = pygame_sdl2.mixer.Sound(os.path.join("assets", "audio", "mine.wav"))
@@ -105,7 +105,8 @@ class Game(object):
                     sys.exit(0)
                 if event.type == pygame_sdl2.KEYDOWN and event.key == pygame_sdl2.K_ESCAPE:
                     sys.exit(0)
-                if event.type == pygame_sdl2.MOUSEBUTTONDOWN and event.button == 1:
+                if (event.type == pygame_sdl2.MOUSEBUTTONDOWN and event.button == 1) or \
+                        (event.type == pygame_sdl2.KEYDOWN and event.key == pygame_sdl2.K_r):
                     if self.rect.collidepoint(pygame_sdl2.mouse.get_pos()):
                         self.setup()
                         print("RELOAD !")
@@ -129,7 +130,8 @@ class Game(object):
                     sys.exit(0)
                 if event.type == pygame_sdl2.KEYDOWN and event.key == pygame_sdl2.K_ESCAPE:
                     sys.exit(0)
-                if event.type == pygame_sdl2.MOUSEBUTTONDOWN and event.button == 1:
+                if (event.type == pygame_sdl2.MOUSEBUTTONDOWN and event.button == 1) or \
+                        (event.type == pygame_sdl2.KEYDOWN and event.key == pygame_sdl2.K_r):
                     if self.rect.collidepoint(pygame_sdl2.mouse.get_pos()):
                         self.setup()
                         print("RELOAD !")

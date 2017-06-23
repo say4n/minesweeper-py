@@ -1,7 +1,7 @@
 # Meet MinePy
 A '17 take on a 70s game !
 
-![MinePy – Sayan Goswami](screenshots/1.png)
+![MinePy – Sayan Goswami](screenshots/minesweeper_demo.gif)
 
 ### What's cool ?
 - Modular approach with OOP - game, board and cell

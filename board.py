@@ -13,7 +13,7 @@ class Board:
         self.width = h
         self.height = w
         self.gameover = False
-        self.num_mines = min(num_mines, self.width * self.height)
+        self.num_mines = min(num_mines, (self.width - 1) * (self.height - 1))
         self.num_flag = self.num_mines
         self.num_not_opened = w * h
         self.board = [[Cell(i, j) for i in range(self.width)] for j in range(self.height)]
@@ -77,8 +77,9 @@ class Board:
                             self.gameover = True
                         # start flood fill in different thread so that we can have animation !
                         _thread.start_new_thread(self.flood_fill, (row, col))
+                        if not self.board[row][col].is_revealed():
+                            self.num_not_opened -= 1
                         self.board[row][col].toggle_state()
-                        self.num_not_opened -= 1
                         self.check_win()
                         return True
                     elif mousebutton == 3:
