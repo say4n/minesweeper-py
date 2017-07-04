@@ -21,4 +21,5 @@ A '17 take on a 70s game !
 - `pygame_sdl2`
 
 ### Todo
-- Flagging system
+
+- [ ] Implement flagging system
