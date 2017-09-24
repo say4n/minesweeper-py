@@ -1,6 +1,9 @@
 # Meet MinePy
 A '17 take on a 70s game !
 
+[![forthebadge](http://forthebadge.com/images/badges/made-with-python.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/contains-technical-debt.svg)](http://forthebadge.com)
+
+
 <center> <img src="screenshots/minesweeper_demo.gif" alt="MinePy – Sayan Goswami"/> </center>
 
 ### What's cool ?
